@@ -2,10 +2,8 @@ package pl.lcc;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ThreadFactory;
 import java.util.function.Function;
 
 public class SleepSorter <T>{
@@ -30,13 +28,11 @@ public class SleepSorter <T>{
 }
 
 class Sleeper implements Runnable {
-
     private final CountDownLatch start;
     private final CountDownLatch finish;
-    int time;
-    Callback callback;
-
-    int multi = 5;
+    private final int time;
+    private final Callback callback;
+    private int delayMultiplier = 5;
 
     public Sleeper(int time, Callback callback, CountDownLatch start, CountDownLatch finish) {
         this.time = time;
@@ -49,7 +45,7 @@ class Sleeper implements Runnable {
     public void run() {
         try {
             start.await();
-            Thread.sleep(time*multi);
+            Thread.sleep(time  * delayMultiplier);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -57,8 +53,8 @@ class Sleeper implements Runnable {
         finish.countDown();
     }
 
-    public void setMulti(int multi) {
-        this.multi = multi;
+    public void setDelayMultiplier(int delayMultiplier) {
+        this.delayMultiplier = delayMultiplier;
     }
 }
 

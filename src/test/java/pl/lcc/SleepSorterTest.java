@@ -30,13 +30,13 @@ class SleepSorterTest {
         );
         var sut = new SleepSorter<Plane>();
         var sa = new SoftAssertions();
-        sa.assertThat(helper(sut, source, Plane::age)).containsSequence("Gulfstream", "Cessna", "B17", "Spitfire");
-        sa.assertThat(helper(sut, source, Plane::capacity)).containsSequence("Spitfire", "Cessna", "B17", "Gulfstream");
-        sa.assertThat(helper(sut, source, p -> p.name().length())).containsSequence("B17","Cessna", "Spitfire", "Gulfstream");
+        sa.assertThat(sortedNames(sut, source, Plane::age)).containsSequence("Gulfstream", "Cessna", "B17", "Spitfire");
+        sa.assertThat(sortedNames(sut, source, Plane::capacity)).containsSequence("Spitfire", "Cessna", "B17", "Gulfstream");
+        sa.assertThat(sortedNames(sut, source, p -> p.name().length())).containsSequence("B17","Cessna", "Spitfire", "Gulfstream");
         sa.assertAll();
     }
 
-    private List<String> helper(SleepSorter<Plane> sut, List<Plane> source, Function <Plane,Integer> f) {
+    private List<String> sortedNames(SleepSorter<Plane> sut, List<Plane> source, Function <Plane,Integer> f) {
         return sut.sort(source,f).stream().map(Plane::name).toList();
     }
 
