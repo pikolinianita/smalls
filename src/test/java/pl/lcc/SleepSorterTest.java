@@ -2,7 +2,6 @@ package pl.lcc;
 
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -50,4 +49,4 @@ class SleepSorterTest {
 
 }
 
-record Plane(String name, Integer age, Integer capacity){};
+record Plane(String name, Integer age, Integer capacity){}
